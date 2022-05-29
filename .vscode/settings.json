@@ -1,0 +1,13 @@
+{
+    "powershell.buttons.showPanelMovementButtons": true,
+    "powershell.codeFormatting.autoCorrectAliases": true,
+    "powershell.codeFormatting.trimWhitespaceAroundPipe": true,
+    "powershell.codeFormatting.useConstantStrings": true,
+    "powershell.codeFormatting.useCorrectCasing": true,
+    "powershell.codeFormatting.whitespaceBetweenParameters": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.globalModuleInstallation": true,
+    "python.linting.banditEnabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.prospectorEnabled": true
+}

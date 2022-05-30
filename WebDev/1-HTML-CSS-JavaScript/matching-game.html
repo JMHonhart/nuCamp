@@ -1,0 +1,115 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Matching Game</title>
+
+    <style>
+        img {
+            position: absolute;
+        }
+        
+        div {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+        }
+
+        #rightSide {
+            left: 500px;
+            border-left: 1px solid;
+        }
+        body{background-color: aquamarine;}
+        div{background-color:white;}
+    </style>
+</head>
+<body>
+    
+    <h1>Matching Game</h1>
+    <button id="btn" onclick="generateFaces()">Start Game</button> |
+    <button id="restart" onclick="newGame()">Restart Game</button> |
+    <p>Click on the extra face on the left and win.<br>
+    Wins = <span id="win">0</span> Loses = <span id="los">0</span> | 
+    Your total so far:  <span id="smiles">0</span> Happy Faces<br>
+    How many faces do you want to generate: <input id="numFace" type="number" value="5" style="width: 40px">
+    </p>
+    <div id="x">
+        <div id="leftSide"></div>
+        <div id="rightSide"></div>
+    </div>
+    <script>
+        // window.addEventListener('load', generateFaces);
+        let numberOfFaces2 = document.getElementById('numFace').value;
+        var numberOfFaces = numberOfFaces2 *1;
+        var numberOfFacesX = numberOfFaces2 *1;
+        var i = 0;
+        const theLeftSide = document.getElementById('leftSide');
+        const theRightSide = document.getElementById('rightSide');
+        var wins = 0; //Global Variable
+        var loss = 0; //Global Variable
+
+        function generateFaces() {
+            if (i == 0){
+                numberOfFaces2 = document.getElementById('numFace').value;
+                numberOfFaces = numberOfFaces2 *1;
+                numberOfFacesX = numberOfFaces2 *1;
+            }
+            i++;
+            document.getElementById("btn").disabled = true;
+            for (let i = 0; i < numberOfFaces; i++) {
+                const face = document.createElement('img');
+                face.src = 'images/smile.png';
+                const randomTop = Math.floor(Math.random() * 400) + 1;
+                const randomLeft = Math.floor(Math.random() * 400) + 1;
+                face.style.top = randomTop + 'px';
+                face.style.left = randomLeft + 'px';
+                theLeftSide.appendChild(face);
+            }
+            document.getElementById('smiles').innerHTML = numberOfFaces;
+            const leftSideImages = theLeftSide.cloneNode(true);
+            leftSideImages.removeChild(leftSideImages.lastChild);
+            theRightSide.appendChild(leftSideImages);
+
+            theLeftSide.lastChild.addEventListener('click', nextLevel);
+            document.getElementById("x").addEventListener('click', gameOver);
+
+        }
+
+        function nextLevel(event) {
+            event.stopPropagation();
+        /*  while (theLeftSide.firstChild) {
+                theLeftSide.removeChild(theLeftSide.firstChild);
+            }
+            while (theRightSide.firstChild) {
+                theRightSide.removeChild(theRightSide.firstChild);
+            } 
+        */
+            theLeftSide.innerHTML = '';
+            theRightSide.innerHTML = '';
+            numberOfFaces = numberOfFaces + numberOfFacesX; // 5; 
+            generateFaces();
+            wins = wins + 1;
+            document.getElementById("win").innerHTML = wins;
+        }
+
+        function gameOver() {
+            alert('You lose! No faces for you...');
+            document.getElementById("x").removeEventListener('click', gameOver)
+            theLeftSide.lastChild.removeEventListener('click', nextLevel)
+            theLeftSide.innerHTML = '';
+            theRightSide.innerHTML = '';
+                numberOfFaces2 = document.getElementById('numFace').value;
+                numberOfFaces = numberOfFaces2 *1;
+                numberOfFacesX = 5;
+                i=0;
+            loss = loss + 1;
+            document.getElementById("los").innerHTML = loss;
+            document.getElementById("btn").disabled = false;
+            document.getElementById('smiles').innerHTML = 0;
+        }
+        restart.onclick = function newGame() {
+            event.stopPropagation();
+            location.reload(true);
+        }
+
+    </script>
+</body>
+</html>

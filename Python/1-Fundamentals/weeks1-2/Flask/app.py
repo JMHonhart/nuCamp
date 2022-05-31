@@ -96,3 +96,4 @@ def upload_file():
 # alt use flask run -h localhost -p 8000
 if __name__ == '__main__':
     app.run(host="localhost", port=8000, debug=False)
+# True - False

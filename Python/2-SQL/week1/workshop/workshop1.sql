@@ -57,4 +57,3 @@ REFERENCES categories (id);
 
 
 -- TODO create more constraints here...
-

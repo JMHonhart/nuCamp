@@ -26,47 +26,47 @@ SET default_with_oids = false;
 
 CREATE TABLE episodes (
     id SERIAL,
-    title TEXT UNIQUE NOT NULL,
-    season INT UNIQUE NOT NULL,
-    airdate DATE NOT NULL,
-    description TEXT,
-    PRIMARY KEY (id)
+    epi_title TEXT UNIQUE NOT NULL,
+    epi_season INT UNIQUE NOT NULL,
+    epi_airdate DATE NOT NULL,
+    epi_description TEXT,
+    PRIMARY KEY (epi_title)
 );
 
 CREATE TABLE series (
     id SERIAL,
-    title TEXT UNIQUE NOT NULL,
-    creator TEXT UNIQUE NOT NULL,
-    startdate DATE NOT NULL,
-    enddate DATE NOT NULL,
-    description TEXT,
-    website TEXT,
+    ser_title TEXT UNIQUE NOT NULL,
+    ser_creator TEXT UNIQUE NOT NULL,
+    ser_startdate DATE NOT NULL,
+    ser_enddate DATE NOT NULL,
+    ser_description TEXT,
+    ser_website TEXT,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE studios (
     id SERIAL,
-    name TEXT UNIQUE NOT NULL,
-    address TEXT UNIQUE NOT NULL,
-    description TEXT,
-    website TEXT UNIQUE NOT NULL,
+    stu_name TEXT UNIQUE NOT NULL,
+    stu_address TEXT UNIQUE NOT NULL,
+    stu_description TEXT,
+    stu_website TEXT UNIQUE NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE characters (
     id SERIAL,
-    name TEXT UNIQUE NOT NULL,
-    part TEXT UNIQUE NOT NULL,
-    description TEXT,
-    PRIMARY KEY (name)
+    cha_name TEXT UNIQUE NOT NULL,
+    cha_part TEXT UNIQUE NOT NULL,
+    cha_description TEXT,
+    PRIMARY KEY (cha_name)
 );
 
 CREATE TABLE actors (
     id SERIAL,
-    name TEXT UNIQUE NOT NULL,
-    description TEXT,
-    website TEXT UNIQUE NOT NULL,
-    PRIMARY KEY (id)
+    act_name TEXT UNIQUE NOT NULL,
+    act_description TEXT,
+    act_website TEXT UNIQUE NOT NULL,
+    PRIMARY KEY (act_name)
 );
 
 ---

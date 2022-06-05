@@ -20,6 +20,7 @@ SET client_min_messages = warning;
 SET default_tablespace = '';
 SET default_with_oids = false;
 
+
 ---
 --- CREATE tables
 ---
@@ -72,12 +73,17 @@ CREATE TABLE actors (
 ---
 --- Add foreign key constraints
 ---
+
 -- PRODUCTS
+
 -- ALTER TABLE products
 -- ADD CONSTRAINT fk_products_categories 
 -- FOREIGN KEY (category_id) 
 -- REFERENCES categories (id);
+
+
 -- TODO create more constraints here...
+
 -- ALTER TABLE orders
 -- ADD CONSTRAINT fk_orders_customers
 -- FOREIGN KEY (customer_id) 

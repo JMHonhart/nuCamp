@@ -2,9 +2,11 @@
 SELECT pg_terminate_backend(pg_stat_activity.pid)
 FROM pg_stat_activity
 WHERE pg_stat_activity.datname = 'week1_workshop' AND pid <> pg_backend_pid();
+
 -- (re)create the database
 DROP DATABASE IF EXISTS week1_workshop;
 CREATE DATABASE week1_workshop;
+
 -- connect via psql
 \c week1_workshop
 

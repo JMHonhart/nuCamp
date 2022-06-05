@@ -1,13 +1,16 @@
 -- kill other connections
 SELECT pg_terminate_backend(pg_stat_activity.pid)
 FROM pg_stat_activity
-WHERE pg_stat_activity.datname = 'starwars_db'
-    AND pid <> pg_backend_pid();
+WHERE pg_stat_activity.datname = 'starwars_db' AND pid <> pg_backend_pid();
+
 -- (re)create the database
 DROP DATABASE IF EXISTS starwars_db;
 CREATE DATABASE starwars_db;
+
 -- connect via psql
-\ c starwars_db -- database configuration
+\c starwars_db; 
+
+-- database configuration
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -16,9 +19,11 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET default_tablespace = '';
 SET default_with_oids = false;
+
 ---
 --- CREATE tables
 ---
+
 CREATE TABLE episodes (
     id SERIAL,
     title TEXT UNIQUE NOT NULL,
@@ -27,6 +32,7 @@ CREATE TABLE episodes (
     description TEXT,
     PRIMARY KEY (id)
 );
+
 CREATE TABLE series (
     id SERIAL,
     title TEXT UNIQUE NOT NULL,
@@ -37,6 +43,7 @@ CREATE TABLE series (
     website TEXT,
     PRIMARY KEY (id)
 );
+
 CREATE TABLE studios (
     id SERIAL,
     name TEXT UNIQUE NOT NULL,
@@ -45,6 +52,7 @@ CREATE TABLE studios (
     website TEXT UNIQUE NOT NULL,
     PRIMARY KEY (id)
 );
+
 CREATE TABLE characters (
     id SERIAL,
     name TEXT UNIQUE NOT NULL,
@@ -52,6 +60,7 @@ CREATE TABLE characters (
     description TEXT,
     PRIMARY KEY (name)
 );
+
 CREATE TABLE actors (
     id SERIAL,
     name TEXT UNIQUE NOT NULL,
@@ -59,6 +68,7 @@ CREATE TABLE actors (
     website TEXT UNIQUE NOT NULL,
     PRIMARY KEY (id)
 );
+
 ---
 --- Add foreign key constraints
 ---

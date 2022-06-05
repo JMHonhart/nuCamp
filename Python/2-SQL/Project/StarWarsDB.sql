@@ -24,7 +24,7 @@ CREATE TABLE episodes (
     title TEXT UNIQUE NOT NULL,
     season INT UNIQUE NOT NULL,
     airdate DATE NOT NULL,
-    epi_description TEXT,
+    description TEXT,
     PRIMARY KEY (id)
 );
 CREATE TABLE series (
@@ -33,29 +33,29 @@ CREATE TABLE series (
     creator TEXT UNIQUE NOT NULL,
     startdate DATE NOT NULL,
     enddate DATE NOT NULL,
-    ser_description TEXT,
+    description TEXT,
     website TEXT,
     PRIMARY KEY (id)
 );
 CREATE TABLE studios (
     id SERIAL,
-    stu_name TEXT UNIQUE NOT NULL,
-    stu_address TEXT UNIQUE NOT NULL,
-    stu_description TEXT,
+    name TEXT UNIQUE NOT NULL,
+    address TEXT UNIQUE NOT NULL,
+    description TEXT,
     website TEXT UNIQUE NOT NULL,
     PRIMARY KEY (id)
 );
 CREATE TABLE characters (
     id SERIAL,
-    cha_name TEXT UNIQUE NOT NULL,
-    cha_part TEXT UNIQUE NOT NULL,
-    cha_description TEXT,
-    PRIMARY KEY (id)
+    name TEXT UNIQUE NOT NULL,
+    part TEXT UNIQUE NOT NULL,
+    description TEXT,
+    PRIMARY KEY (name)
 );
 CREATE TABLE actors (
     id SERIAL,
-    act_name TEXT UNIQUE NOT NULL,
-    act_description TEXT,
+    name TEXT UNIQUE NOT NULL,
+    description TEXT,
     website TEXT UNIQUE NOT NULL,
     PRIMARY KEY (id)
 );

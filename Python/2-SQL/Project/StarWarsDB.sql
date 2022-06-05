@@ -41,7 +41,7 @@ CREATE TABLE series (
     ser_enddate DATE NOT NULL,
     ser_description TEXT,
     ser_website TEXT,
-    PRIMARY KEY (id)
+    PRIMARY KEY (ser_title)
 );
 
 CREATE TABLE studios (

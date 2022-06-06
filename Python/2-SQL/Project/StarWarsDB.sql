@@ -28,21 +28,22 @@ SET default_with_oids = false;
 CREATE TABLE episodes (
     id SERIAL,
     epi_title TEXT UNIQUE NOT NULL,
-    epi_season INT UNIQUE NOT NULL,
+    epi_season INT NOT NULL,
     epi_airdate DATE NOT NULL,
     epi_description TEXT,
-    PRIMARY KEY (epi_title)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE series (
     id SERIAL,
     ser_title TEXT UNIQUE NOT NULL,
-    ser_creator TEXT UNIQUE NOT NULL,
+    ser_seasons INT NOT NULL,
+    ser_creator TEXT NOT NULL,
     ser_startdate DATE NOT NULL,
     ser_enddate DATE NOT NULL,
     ser_description TEXT,
     ser_website TEXT,
-    PRIMARY KEY (ser_title)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE studios (
@@ -59,7 +60,7 @@ CREATE TABLE characters (
     cha_name TEXT UNIQUE NOT NULL,
     cha_part TEXT UNIQUE NOT NULL,
     cha_description TEXT,
-    PRIMARY KEY (cha_name)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE actors (
@@ -67,28 +68,14 @@ CREATE TABLE actors (
     act_name TEXT UNIQUE NOT NULL,
     act_description TEXT,
     act_website TEXT UNIQUE NOT NULL,
-    PRIMARY KEY (act_name)
+    PRIMARY KEY (id)
 );
 
 ---
 --- Add foreign key constraints
 ---
 
--- PRODUCTS
-
--- ALTER TABLE products
--- ADD CONSTRAINT fk_products_categories 
--- FOREIGN KEY (category_id) 
--- REFERENCES categories (id);
-
-
--- TODO create more constraints here...
-
--- ALTER TABLE orders
--- ADD CONSTRAINT fk_orders_customers
--- FOREIGN KEY (customer_id) 
--- REFERENCES customers;
--- ALTER TABLE orders
--- ADD CONSTRAINT fk_orders_employees
--- FOREIGN KEY (employee_id) 
--- REFERENCES employees;
+ALTER TABLE series
+ADD CONSTRAINT fk_series_episodes
+FOREIGN KEY (ser_seasons) 
+REFERENCES episodes;

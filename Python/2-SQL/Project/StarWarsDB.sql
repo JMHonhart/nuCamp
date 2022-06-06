@@ -79,3 +79,23 @@ ALTER TABLE series
 ADD CONSTRAINT fk_series_episodes
 FOREIGN KEY (ser_seasons) 
 REFERENCES episodes;
+
+ALTER TABLE series
+ADD CONSTRAINT fk_series_characters
+FOREIGN KEY (ser_seasons) 
+REFERENCES characters;
+
+ALTER TABLE series
+ADD CONSTRAINT fk_series_actors
+FOREIGN KEY (ser_seasons) 
+REFERENCES actors;
+
+ALTER TABLE series
+ADD CONSTRAINT fk_series_studios
+FOREIGN KEY (ser_seasons) 
+REFERENCES studios;
+
+ALTER TABLE episodes
+ADD CONSTRAINT fk_episodes_characters
+FOREIGN KEY (epi_season) 
+REFERENCES characters;

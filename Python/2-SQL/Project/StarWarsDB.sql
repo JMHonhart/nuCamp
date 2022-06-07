@@ -1,3 +1,4 @@
+-- cat StarWarsDB.sql | docker exec -i pg_container psql
 -- kill other connections
 SELECT pg_terminate_backend(pg_stat_activity.pid)
 FROM pg_stat_activity
@@ -25,17 +26,7 @@ SET default_with_oids = false;
 --- CREATE tables
 ---
 
-CREATE TABLE episodes (
-    id SERIAL,
-    epi_title TEXT UNIQUE NOT NULL,
-    epi_season INT NOT NULL,
-    epi_airdate DATE NOT NULL,
-    epi_description TEXT,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE series (
-    id SERIAL,
     ser_title TEXT UNIQUE NOT NULL,
     ser_seasons INT NOT NULL,
     ser_creator TEXT NOT NULL,
@@ -43,59 +34,49 @@ CREATE TABLE series (
     ser_enddate DATE NOT NULL,
     ser_description TEXT,
     ser_website TEXT,
-    PRIMARY KEY (id)
+    PRIMARY KEY (ser_title)
+);
+
+CREATE TABLE episodes (
+    epi_title TEXT UNIQUE NOT NULL,
+    epi_series TEXT UNIQUE NOT NULL references series(ser_title),
+    epi_season INT NOT NULL,
+    epi_airdate DATE NOT NULL,
+    epi_description TEXT,
+    PRIMARY KEY (epi_title)
 );
 
 CREATE TABLE studios (
-    id SERIAL,
     stu_name TEXT UNIQUE NOT NULL,
+    ser_title TEXT UNIQUE NOT NULL references series(ser_title),
     stu_address TEXT UNIQUE NOT NULL,
     stu_description TEXT,
     stu_website TEXT UNIQUE NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (stu_name)
 );
 
 CREATE TABLE characters (
-    id SERIAL,
     cha_name TEXT UNIQUE NOT NULL,
     cha_part TEXT UNIQUE NOT NULL,
+    ser_title TEXT UNIQUE NOT NULL references series(ser_title),
+    epi_title TEXT UNIQUE NOT NULL references episodes(epi_title),
     cha_description TEXT,
-    PRIMARY KEY (id)
+    PRIMARY KEY (cha_name)
 );
 
 CREATE TABLE actors (
-    id SERIAL,
     act_name TEXT UNIQUE NOT NULL,
+    cha_name TEXT UNIQUE NOT NULL references characters(cha_name),
     act_description TEXT,
     act_website TEXT UNIQUE NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (act_name)
 );
 
 ---
 --- Add foreign key constraints
 ---
 
-ALTER TABLE series
-ADD CONSTRAINT fk_series_episodes
-FOREIGN KEY (ser_seasons) 
-REFERENCES episodes;
-
-ALTER TABLE series
-ADD CONSTRAINT fk_series_characters
-FOREIGN KEY (ser_seasons) 
-REFERENCES characters;
-
-ALTER TABLE series
-ADD CONSTRAINT fk_series_actors
-FOREIGN KEY (ser_seasons) 
-REFERENCES actors;
-
-ALTER TABLE series
-ADD CONSTRAINT fk_series_studios
-FOREIGN KEY (ser_seasons) 
-REFERENCES studios;
-
-ALTER TABLE episodes
-ADD CONSTRAINT fk_episodes_characters
-FOREIGN KEY (epi_season) 
-REFERENCES characters;
+-- ALTER TABLE episodes
+-- ADD CONSTRAINT fk_episodes_epi_series
+-- FOREIGN KEY (epi_series) 
+-- REFERENCES series;

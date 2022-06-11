@@ -22,7 +22,12 @@
 -- that the employees_categories has been created with the expected columns
 -- and primary key. Place your answer in the blank space below. 
 
-
+CREATE TABLE employees_categories (
+    employee_categories TEXT,
+    employee_id INT,
+    category_id INT,
+    PRIMARY KEY (employee_id, category_id)
+);
 
 -- 4.2: Alter table
 -- Write ALTER TABLE statement on the employees_categories table. Use it to add
@@ -34,7 +39,10 @@
 -- Test your answer in pgAdmin or psql and verify that it worked correctly, then
 -- place it in the blank space below.
 
-
+ALTER TABLE employees_categories
+ADD CONSTRAINT fk_ec_employees
+FOREIGN KEY (employee_id)
+REFERENCES employees;
 
 -- 4.3: Alter table
 -- Write an ALTER TABLE statement on the employees_categories table. Use it to add
@@ -46,7 +54,10 @@
 -- Test your answer in pgAdmin or psql and verify that it worked correctly, then
 -- place it in the blank space below.
 
-
+ALTER TABLE employees_categories
+ADD CONSTRAINT fk_ec_categories
+FOREIGN KEY (category_id)
+REFERENCES categories;
 
 -- 4.4: Insert records
 -- Write an INSERT statement that inserts the following employee ID, category ID pairs 
@@ -56,7 +67,8 @@
 -- Test your answer in pgAdmin or psql and verify that it worked correctly, then
 -- place it in the blank space below.
 
-
+INSERT INTO employees_categories (employee_id, category_id)
+VALUES (1,2), (3,4), (4,3), (4,4), (8,2), (1,8), (1,3), (1,6);
 
 -- 4.5: Remove records
 -- Write a statement that deletes all records from employees_categories but does not 
@@ -67,7 +79,7 @@
 -- Test your answer in pgAdmin or psql and verify that it worked correctly, then
 -- place it in the blank space below.
 
-
+DELETE FROM employees_categories;
 
 -- Bonus Task (optional)
 -- Refer to the new management decision at the top of this file.  
@@ -80,7 +92,14 @@
 -- Test your answer in pgAdmin or psql and verify that it worked correctly, then
 -- place it in the blank space below.
 
-
+INSERT INTO employees_categories(employee_id, category_id) (
+	SELECT employee_id,
+	(   SELECT category_id
+		FROM categories
+		WHERE category_name = 'Dairy Products'
+	)FROM employees
+	WHERE city = 'London'
+);
 
 -- 4.6: Delete table
 -- Write a query to delete the employees_categories table entirely,
@@ -90,3 +109,5 @@
 --
 -- Test your answer in pgAdmin or psql and verify that it worked correctly, then
 -- place it in the blank space below.
+
+DROP TABLE employees_categories;

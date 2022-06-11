@@ -7,7 +7,8 @@
 -- Make sure to test it against the northwind database, using
 -- either pgAdmin or psql!
 
-
+SELECT * FROM categories
+ORDER BY category_id;
 
 -- 1.2
 -- Select each city from the employees table without any duplicates
@@ -15,7 +16,8 @@
 --
 -- Hint: Use the DISTINCT keyword at the appropriate place in your query. 
 
-
+SELECT DISTINCT city FROM employees
+ORDER BY city DESC;
 
 -- 1.3
 -- Select the product_id and product_name columns from the products table,
@@ -25,7 +27,9 @@
 -- Hint: To check if a product is discontinued, use the WHERE clause to
 -- filter for rows/records where the discontinued field is equal to true. 
 
-
+SELECT product_id, product_name FROM products
+WHERE discontinued = 'true'
+ORDER BY product_id;
 
 -- 1.4
 -- Select the first_name and last_name from the employees table, of
@@ -33,7 +37,9 @@
 -- (i.e. those WHERE the reports_to field IS NULL).
 -- Order the results by employee_id.
 
-
+SELECT first_name, last_name FROM employees
+WHERE reports_to IS NULL
+ORDER BY employee_id;
 
 -- 1.5
 -- Select the product_name of each product where the units_in_stock is 
@@ -48,8 +54,9 @@
 -- Then add each of the clauses, one by one, testing after each one,
 -- until you reach the final result.
 
-
-
+SELECT product_name FROM products p
+WHERE p.discontinued = false AND (p.units_on_order > 0)
+ORDER BY product_id;
 
 -- PART 2: FUNCTIONS AND GROUPING ------------------------------------------
 
@@ -62,7 +69,7 @@
 -- How many orders have been made?
 -- Write a SELECT query that will count all rows/records in the orders table.
 
-
+SELECT COUNT(*) FROM orders;
 
 -- 2.2
 -- How many orders has each customer made?
@@ -73,7 +80,9 @@
 -- Think carefully about how this query answers the question, how many
 -- orders has each customer made?
 
-
+SELECT customer_id, COUNT(order_id) AS order_count FROM orders
+GROUP BY customer_id
+ORDER BY order_count DESC, customer_id;
 
 -- 2.3
 -- Which ship_address are we shipping the most orders to?
@@ -91,7 +100,10 @@
 -- science application! We will take a closer look at data science and
 -- data visualizations in a future lesson.
 
-
+SELECT ship_address, COUNT(order_id) AS order_count FROM orders
+GROUP BY ship_address
+ORDER BY order_count DESC
+LIMIT 1;
 
 -- 2.4
 -- Let's say we want to offer a new freight discount, but only to customers
@@ -106,7 +118,10 @@
 -- is more than $500. 
 -- Order the results by customer_id.
 
-
+SELECT customer_id, SUM(freight) FROM orders
+GROUP BY customer_id
+HAVING SUM(freight) >= 500
+ORDER BY customer_id; 
 
 -- 2.5
 -- Let's say we want to analyze possibly consolidating the shippers we use.
@@ -132,11 +147,10 @@
 -- was created by the WITH query).
 
 WITH shippers_per_customer AS (
-    -- Delete this line and replace it with your first SELECT query to create the CTE.
+    SELECT COUNT(DISTINCT ship_via) AS shipper_count FROM orders
+    GROUP BY customer_id
 ) 
--- Delete this line and replace it with your second SELECT query using the CTE.
-
-
+SELECT AVG(shipper_count) FROM shippers_per_customer;
 
 
 -- PART 3: MIX AND MATCH ------------------------------------------
@@ -160,9 +174,9 @@ WITH shippers_per_customer AS (
 -- Order the results by the product_id of the products table.  
 
 SELECT p.product_name, c.category_name 
-FROM products p 
-
-
+FROM products p
+JOIN categories c ON c.category_id = p.category_id
+ORDER BY product_id;
 
 -- 3.2
 -- HR wants to do a staff audit across the regions.
@@ -197,8 +211,9 @@ FROM products p
 SELECT DISTINCT r.region_description, t.territory_description, e.last_name, e.first_name
 FROM employees e
 JOIN employees_territories et ON e.employee_id = et.employee_id
-
-
+JOIN territories t ON et.territory_id = t.territory_id
+JOIN regions r ON t.region_id = r.region_id
+ORDER BY r.region_description, t.territory_description, e.last_name, e.first_name;
 
 -- 3.3
 -- Finance is doing an audit and has requested a list of each customer in the 
@@ -225,8 +240,8 @@ JOIN employees_territories et ON e.employee_id = et.employee_id
 
 SELECT s.state_name, s.state_abbr, c.company_name
 FROM us_states s
-
-
+LEFT OUTER JOIN customers c ON s.state_abbr = c.region AND c.country='USA'
+ORDER BY state_name;
 
 -- 3.4
 -- The Talent Acquisition team is looking to fill some open positions.
@@ -254,7 +269,12 @@ FROM us_states s
 
 -- Finally, take the final result set and order by territory_id.
 
-
+SELECT t.territory_description, r.region_description FROM territories t
+JOIN regions r ON r.region_id = t.region_id
+    WHERE t.territory_id NOT IN (
+	SELECT et.territory_id
+	FROM employees_territories et)
+ORDER BY territory_id;
 
 -- 3.5
 -- Management needs a list of all suppliers' and customers' contact information 
@@ -266,7 +286,10 @@ FROM us_states s
 -- Hint: While there are other ways, this is a good chance to use the UNION
 -- operator, as demonstrated in the lesson SQL Set Operations.
 
-
+SELECT company_name, address, city, region, postal_code, country FROM suppliers
+UNION 
+SELECT company_name, address, city, region, postal_code, country FROM customers
+ORDER BY company_name;
 
 -- BONUS (optional)
 -- 3.6

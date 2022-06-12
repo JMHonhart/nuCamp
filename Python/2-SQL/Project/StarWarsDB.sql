@@ -38,12 +38,12 @@ CREATE TABLE series (
 );
 
 CREATE TABLE episodes (
-    epi_title TEXT UNIQUE NOT NULL,
-    epi_series TEXT UNIQUE NOT NULL references series(series_title),
-    epi_season INT NOT NULL,
-    epi_airdate DATE NOT NULL,
-    epi_description TEXT,
-    PRIMARY KEY (epi_title)
+    episodes_title TEXT UNIQUE NOT NULL,
+    episodes_series TEXT UNIQUE NOT NULL references series(series_title),
+    episodes_season INT NOT NULL,
+    episodes_airdate DATE NOT NULL,
+    episodes_description TEXT,
+    PRIMARY KEY (episodes_title)
 );
 
 CREATE TABLE studios (
@@ -59,7 +59,7 @@ CREATE TABLE characters (
     characters_name TEXT UNIQUE NOT NULL,
     characters_part TEXT UNIQUE NOT NULL,
     series_title TEXT UNIQUE NOT NULL references series(series_title),
-    epi_title TEXT UNIQUE NOT NULL references episodes(epi_title),
+    episodes_title TEXT UNIQUE NOT NULL references episodes(episodes_title),
     characters_description TEXT,
     PRIMARY KEY (characters_name)
 );
@@ -77,6 +77,6 @@ CREATE TABLE actors (
 ---
 
 -- ALTER TABLE episodes
--- ADD CONSTRAINT fk_episodes_epi_series
--- FOREIGN KEY (epi_series) 
+-- ADD CONSTRAINT fk_episodes_episodes_series
+-- FOREIGN KEY (episodes_series) 
 -- REFERENCES series;

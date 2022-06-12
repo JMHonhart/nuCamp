@@ -54,8 +54,8 @@ ORDER BY employee_id;
 -- Then add each of the clauses, one by one, testing after each one,
 -- until you reach the final result.
 
-SELECT product_name FROM products p
-WHERE p.discontinued = false AND (p.units_on_order > 0)
+SELECT product_name FROM products
+WHERE discontinued = 'false' AND (units_on_order > 0)
 ORDER BY product_id;
 
 -- PART 2: FUNCTIONS AND GROUPING ------------------------------------------
@@ -240,7 +240,7 @@ ORDER BY r.region_description, t.territory_description, e.last_name, e.first_nam
 
 SELECT s.state_name, s.state_abbr, c.company_name
 FROM us_states s
-LEFT OUTER JOIN customers c ON s.state_abbr = c.region AND c.country='USA'
+LEFT JOIN customers c ON s.state_abbr = c.region
 ORDER BY state_name;
 
 -- 3.4
@@ -287,7 +287,7 @@ ORDER BY territory_id;
 -- operator, as demonstrated in the lesson SQL Set Operations.
 
 SELECT company_name, address, city, region, postal_code, country FROM suppliers
-UNION ALL
+UNION
 SELECT company_name, address, city, region, postal_code, country FROM customers
 ORDER BY company_name;
 
@@ -318,5 +318,10 @@ ORDER BY company_name;
 -- Finally, order by the SUM of the quantity of the order_details table, 
 -- in descending order.
 
-
-ORDER BY SUM(order_details);
+SELECT c.company_name, SUM(od.quantity) AS famous_holiday_gift
+FROM customers c 
+    JOIN orders o ON c.customer_id = o.customer_id
+        JOIN order_details od ON o.order_id =od.order_id
+GROUP BY c.company_name
+HAVING SUM(od.quantity) >= 500
+ORDER BY famous_holiday_gift DESC;

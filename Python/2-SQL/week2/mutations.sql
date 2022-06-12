@@ -23,7 +23,6 @@
 -- and primary key. Place your answer in the blank space below. 
 
 CREATE TABLE employees_categories (
-    employee_categories TEXT,
     employee_id INT,
     category_id INT,
     PRIMARY KEY (employee_id, category_id)
@@ -40,7 +39,7 @@ CREATE TABLE employees_categories (
 -- place it in the blank space below.
 
 ALTER TABLE employees_categories
-ADD CONSTRAINT fk_ec_employees
+ADD CONSTRAINT fk_employee_categories_employee
 FOREIGN KEY (employee_id)
 REFERENCES employees;
 
@@ -55,7 +54,7 @@ REFERENCES employees;
 -- place it in the blank space below.
 
 ALTER TABLE employees_categories
-ADD CONSTRAINT fk_ec_categories
+ADD CONSTRAINT fk_employee_categories_categories
 FOREIGN KEY (category_id)
 REFERENCES categories;
 

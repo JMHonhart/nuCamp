@@ -27,19 +27,19 @@ SET default_with_oids = false;
 ---
 
 CREATE TABLE series (
-    ser_title TEXT UNIQUE NOT NULL,
-    ser_seasons INT NOT NULL,
-    ser_creator TEXT NOT NULL,
-    ser_startdate DATE NOT NULL,
-    ser_enddate DATE NOT NULL,
-    ser_description TEXT,
-    ser_website TEXT,
-    PRIMARY KEY (ser_title)
+    series_title TEXT UNIQUE NOT NULL,
+    series_seasons INT NOT NULL,
+    series_creator TEXT NOT NULL,
+    series_startdate DATE NOT NULL,
+    series_enddate DATE NOT NULL,
+    series_description TEXT,
+    series_website TEXT,
+    PRIMARY KEY (series_title)
 );
 
 CREATE TABLE episodes (
     epi_title TEXT UNIQUE NOT NULL,
-    epi_series TEXT UNIQUE NOT NULL references series(ser_title),
+    epi_series TEXT UNIQUE NOT NULL references series(series_title),
     epi_season INT NOT NULL,
     epi_airdate DATE NOT NULL,
     epi_description TEXT,
@@ -47,29 +47,29 @@ CREATE TABLE episodes (
 );
 
 CREATE TABLE studios (
-    stu_name TEXT UNIQUE NOT NULL,
-    ser_title TEXT UNIQUE NOT NULL references series(ser_title),
-    stu_address TEXT UNIQUE NOT NULL,
-    stu_description TEXT,
-    stu_website TEXT UNIQUE NOT NULL,
-    PRIMARY KEY (stu_name)
+    studios_name TEXT UNIQUE NOT NULL,
+    series_title TEXT UNIQUE NOT NULL references series(series_title),
+    studios_address TEXT UNIQUE NOT NULL,
+    studios_description TEXT,
+    studios_website TEXT UNIQUE NOT NULL,
+    PRIMARY KEY (studios_name)
 );
 
 CREATE TABLE characters (
-    cha_name TEXT UNIQUE NOT NULL,
-    cha_part TEXT UNIQUE NOT NULL,
-    ser_title TEXT UNIQUE NOT NULL references series(ser_title),
+    characters_name TEXT UNIQUE NOT NULL,
+    characters_part TEXT UNIQUE NOT NULL,
+    series_title TEXT UNIQUE NOT NULL references series(series_title),
     epi_title TEXT UNIQUE NOT NULL references episodes(epi_title),
-    cha_description TEXT,
-    PRIMARY KEY (cha_name)
+    characters_description TEXT,
+    PRIMARY KEY (characters_name)
 );
 
 CREATE TABLE actors (
-    act_name TEXT UNIQUE NOT NULL,
-    cha_name TEXT UNIQUE NOT NULL references characters(cha_name),
-    act_description TEXT,
-    act_website TEXT UNIQUE NOT NULL,
-    PRIMARY KEY (act_name)
+    actors_name TEXT UNIQUE NOT NULL,
+    characters_name TEXT UNIQUE NOT NULL references characters(characters_name),
+    actors_description TEXT,
+    actors_website TEXT UNIQUE NOT NULL,
+    PRIMARY KEY (actors_name)
 );
 
 ---

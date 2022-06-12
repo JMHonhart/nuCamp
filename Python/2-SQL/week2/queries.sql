@@ -287,7 +287,7 @@ ORDER BY territory_id;
 -- operator, as demonstrated in the lesson SQL Set Operations.
 
 SELECT company_name, address, city, region, postal_code, country FROM suppliers
-UNION 
+UNION ALL
 SELECT company_name, address, city, region, postal_code, country FROM customers
 ORDER BY company_name;
 
@@ -317,3 +317,6 @@ ORDER BY company_name;
 --
 -- Finally, order by the SUM of the quantity of the order_details table, 
 -- in descending order.
+
+
+ORDER BY SUM(order_details);

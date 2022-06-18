@@ -92,3 +92,34 @@ def liked_tweets(id: int):
     for t in u.liked_tweets:
         results.append(t.serialize())
     return jsonify(results)
+
+
+@bp.route('/<int:user_id>/likes', methods=['POST'])
+def like(user_id: int):
+    body = request.json
+    if 'tweet_id' not in body:
+        return abort(400)
+
+    user = User.query.get_or_404(user_id)
+    tweet = Tweet.query.get_or_404(body['tweet_id'])
+    try:
+        insert_likes_query = likes_table.insert().values(user_id=user.id, tweet_id=tweet.id)
+        db.session.execute(insert_likes_query)
+        db.session.commit()
+        return jsonify(True)
+    except:
+        return jsonify(False)
+
+
+@bp.route('/<int:user_id>/likes/<int:tweet_id>', methods=['DELETE'])
+def unlike(user_id: int, tweet_id: int):
+    user = User.query.get_or_404(user_id)
+    tweet = Tweet.query.get_or_404(tweet_id)
+    delete_like = (
+        likes_table.delete()
+        .where(likes_table.c.user_id == user.id)
+        .where(likes_table.c.tweet_id == tweet.id)
+    )
+    db.session.execute(delete_like)
+    db.session.commit()
+    return jsonify(delete_like.compile().params)

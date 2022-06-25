@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-con = psycopg2.connect("dbname=moma user=postgres host=localhost port=5432")
+con = psycopg2.connect("dbname=week4 user=postgres host=localhost port=5432")
 
 
 def sql_to_df(sql_query: str):
@@ -20,10 +20,14 @@ def task1():
     """Perform Task 1."""
 
     title = "Artworks by Department"
-    # TODO task 1 - place your query between the triple quotes below
-    query = """
-
-    """
+    query = '''
+        SELECT 
+            department,
+            COUNT(*) AS count
+        FROM moma_works
+        GROUP BY department
+        ORDER BY count DESC;
+    '''
 
     dataframe = sql_to_df(query)
     _fig, axes = plt.subplots(figsize=(10, 5))
@@ -54,10 +58,16 @@ def task2():
     """Perform Task 2."""
 
     title = "Artworks by Classification"
-    # TODO task 2 - place your query between the triple quotes below
-    query = """
-    
-    """
+    query = '''
+        SELECT
+            classification,
+            COUNT(*) AS count
+        FROM moma_works
+        GROUP BY classification
+        HAVING COUNT(*) >= 100
+        ORDER BY count
+        DESC;
+    '''
 
     dataframe = sql_to_df(query)
     _fig, axes = plt.subplots(figsize=(10, 5))
@@ -83,10 +93,16 @@ def task3():
     """Perform Task 3."""
 
     title = "Artists by Nationality"
-    # TODO task 3 - place your query between the triple quotes below
-    query = """
-    
-    """
+    query = '''
+        SELECT
+            info ->> 'nationality' AS nationality,
+            COUNT(*) AS count
+        FROM moma_artists
+        WHERE info ->> 'nationality' IS NOT NULL
+        GROUP BY nationality
+        ORDER BY count DESC
+        LIMIT 10;
+    '''
 
     dataframe = sql_to_df(query)
     _fig, axes = plt.subplots(figsize=(10, 5))
@@ -110,9 +126,15 @@ def task4():
     """Perform Task 4."""
 
     title = "Artists by Gender"
-    # TODO task 4 - place your query between the triple quotes below
-    query = """
-    """
+    query = '''
+        SELECT
+            UPPER(info ->> 'gender') AS gender,
+            COUNT(info -> 'gender') AS count
+        FROM moma_artists
+        WHERE info ->> 'gender' IS NOT NULL
+        GROUP BY gender
+        ORDER BY gender;
+    '''
 
     dataframe = sql_to_df(query)
     fig, axes = plt.subplots(figsize=(10, 5))
@@ -134,14 +156,12 @@ def task4():
 task4()
 
 # %% Task 5 Cell: Describe this chart
-# This is a BONUS task and not required
 
 
 def task5():
     """Perform Task 5."""
 
-    # TODO BONUS task - research the purpose of this query and write an appropriate title
-    title = "?"
+    title = "Cumulative Painting Acquisition by Date"  # TODO task 5
     query = """
             WITH daily_acquisition_count AS (
                 SELECT date_acquired, COUNT(*) FROM moma_works 

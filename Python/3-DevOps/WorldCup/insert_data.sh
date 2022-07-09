@@ -8,4 +8,6 @@ else
 fi
 
 # Do not change code above this line. Use the PSQL variable above to query your database.
+echo $($PSQL "TRUNCATE games, teams")
+
 cat games.csv | while IFS="," read year round winner opponent winner_goals opponent_goals

@@ -1,0 +1,10 @@
+100.20.106.150
+ec2-100-20-106-150.us-west-2.compute.amazonaws.com
+aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 970607447498.dkr.ecr.us-west-2.amazonaws.com
+docker build -t workshop2 .
+docker tag workshop2:latest 970607447498.dkr.ecr.us-west-2.amazonaws.com/workshop2:latest
+docker push 970607447498.dkr.ecr.us-west-2.amazonaws.com/workshop2:latest
+970607447498.dkr.ecr.us-west-2.amazonaws.com/workshop2
+nctutorials.cugo5bqaiqcw.us-west-2.rds.amazonaws.com
+postgres
+admin123

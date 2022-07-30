@@ -1,0 +1,22 @@
+resource group name: django-apps
+cluster name: djangocluster
+registry server name: jmhdjangoregistry.
+login server: jmhdjangoregistry.azurecr.io
+
+az acr login --name jmhdjangoregistry
+docker tag workshop4:latest jmhdjangoregistry.azurecr.io/workshop4:v1
+az postgres flexible-server create --resource-group django-apps --name jmhworkshop4 --database-name nc_tutorials_db --public-access all
+
+  "connectionString": "postgresql://notedgnat4:eQdxAmeByRF02pt0Ra3yqA@jmhworkshop4.postgres.database.azure.com/postgres?sslmode=require",
+  "databaseName": "nc_tutorials_db",
+  "firewallName": "AllowAll_2022-7-27_21-38-24",
+  "host": "jmhworkshop4.postgres.database.azure.com",
+  "id": "/subscriptions/92ec0ae2-68a4-41b5-aa4e-5b9736ccb1fd/resourceGroups/django-apps/providers/Microsoft.DBforPostgreSQL/flexibleServers/jmhworkshop4",
+  "location": "East US",
+  "password": "eQdxAmeByRF02pt0Ra3yqA",
+  "resourceGroup": "django-apps",
+  "skuname": "Standard_D2s_v3",
+  "username": "notedgnat4",
+  "version": "13"
+
+az aks get-credentials --name djangocluster --resource-group django-apps

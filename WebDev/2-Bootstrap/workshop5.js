@@ -1,4 +1,4 @@
-//TODO: TASK ONE
+//TASK 1:
 
 class Student {
     constructor(name, email) {
@@ -14,7 +14,7 @@ if (testStudent.name === 'Bugs Bunny' && testStudent.email === 'bugs@bunny.com')
 }
 
 
-//TODO: Task TWO
+//TASK 2:
 
 class Bootcamp {
     constructor(name, level, students) {
@@ -22,15 +22,41 @@ class Bootcamp {
         this.level = level;
         this.students = [];
     }
+    registerStudent(studentToRegister) {
+        if (!studentToRegister.name || !studentToRegister.email) {
+            console.log("Invalide name or email");
+            return false;
+        } else {
+            if (this.students.find(student => student.email === studentToRegister.email)) {
+                console.log(`The email address ${studentToRegister.email} is already registerd!`);
+                return false;
+            }
+            else {
+                this.students.push(studentToRegister);
+                console.log(`Registering ${studentToRegister.name} to the ${this.name} bootcamp.`);
+                return true;
+            }
+        }
+    }
+    listStudents() {
+        if (this.students.length === 0) {
+            console.log(`No students are registered to the ${this.name} bootcamp.`);
+            return false;
+        }
+        else {
+            console.log(`The students registered in ${this.name} are:`);
+            this.students.forEach(student => console.log(`Name: ${student.name}  Email: ${student.email}`));
+            return true;
+        }
+    }
 }
+
 reactBootcamp = new Bootcamp("React", "Advanced");
 console.log(reactBootcamp);
 if (reactBootcamp.name === 'React' && reactBootcamp.level === 'Advanced'
     && Array.isArray(reactBootcamp.students) && reactBootcamp.students.length === 0) {
     console.log('TASK 2: PASS');
 }
-
-//TODO: Task 3
 
 const runTest = (bootcamp, student) => {
     const attemptOne = bootcamp.registerStudent(student);
@@ -39,8 +65,6 @@ const runTest = (bootcamp, student) => {
     if (attemptOne && !attemptTwo && !attemptThree) {
         console.log("TASK 3: PASS");
     }
-
-    //TODO: Task4
 
     bootcamp.registerStudent(new Student('Babs Bunny', 'babs@bunny.com'));
     if (bootcamp.listStudents()) {
@@ -52,5 +76,4 @@ const runTest = (bootcamp, student) => {
     }
 };
 
-//calling or invoking the function
 runTest(reactBootcamp, testStudent);

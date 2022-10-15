@@ -38,6 +38,7 @@ class Bootcamp {
             }
         }
     }
+
     listStudents() {
         if (this.students.length === 0) {
             console.log(`No students are registered to the ${this.name} bootcamp.`);

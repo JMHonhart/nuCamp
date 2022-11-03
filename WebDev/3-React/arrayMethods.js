@@ -58,4 +58,4 @@ const things = [
 
 console.log(things.filter((thing) => thing.featured));
 
-console.log(things.find((thing) => thing.featured));
+console.log(things.find((thing) => thing.featured)[0]);

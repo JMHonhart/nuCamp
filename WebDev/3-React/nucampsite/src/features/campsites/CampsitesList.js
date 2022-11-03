@@ -5,7 +5,7 @@ import { selectAllCampsites } from './campsitesSlice';
 const CampsitesList = () => {
     const campsites = selectAllCampsites();
 
-    return (
+    return (     
         <Row className="ms-auto">
             {campsites.map((campsite) => {
                 return (
@@ -14,7 +14,7 @@ const CampsitesList = () => {
                     </Col>
                 );
             })}
-        </Row>
+        </Row>  
     );
 };
 

@@ -17,7 +17,7 @@ const ContactForm = () => {
                 email: '',
                 agree: false,
                 contactType: 'By Phone',
-                feedback: ''
+                feedback: '',
             }}
             onSubmit={handleSubmit}
         >
@@ -113,7 +113,7 @@ const ContactForm = () => {
                 </FormGroup>
             </Form>
         </Formik>
-    )
+    );
 };
 
 export default ContactForm;

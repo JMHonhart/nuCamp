@@ -21,7 +21,10 @@ export const validateContactForm = (values) => {
     const reg = /^\d+$/;
     if (!reg.test(values.phoneNum)) {
         errors.phoneNum = 'The phone number should contain only numbers.';
+    } else if (values.phoneNum.length === 7) {
+        errors.firstName = 'Must be at 7 Digits.';
     }
+
 
     if (!values.email.includes('@')) {
         errors.email = 'Email should contain a @';

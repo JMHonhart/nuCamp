@@ -1,5 +1,6 @@
 import { Col } from 'reactstrap';
-import Comment from './Comment';
+import AnimatedComment from './AnimatedComment';
+import CommentForm from './CommentForm';
 import { selectCommentsByCampsiteId } from './commentsSlice';
 
 const CommentsList = ({ campsiteId }) => {
@@ -9,9 +10,16 @@ const CommentsList = ({ campsiteId }) => {
         return (
             <Col md='5' className='m-1'>
                 <h4>Comments</h4>
-                {comments.map((comment) => {
-                    return <Comment key={comment.id} comment={comment} />;
+                {comments.map((comment, idx) => {
+                    return (
+                        <AnimatedComment
+                            key={comment.id}
+                            comment={comment}
+                            idx={idx}
+                        />
+                    );
                 })}
+                <CommentForm campsiteId={campsiteId} />
             </Col>
         );
     }

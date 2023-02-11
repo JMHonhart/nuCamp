@@ -15,7 +15,7 @@ Flask-SQLAlchemy==2.5.1
 greenlet==1.1.0
 idna==2.10
 ipykernel==5.5.5
-ipython==7.31.1
+ipython==8.10.0
 ipython-genutils==0.2.0
 isort==5.8.0
 itsdangerous==2.0.1
